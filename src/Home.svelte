@@ -37,7 +37,7 @@
 		display: grid;
 		justify-items: center;
 		user-select: none;
-		font-size: 20px;
+		font-size: 21px;
 	}
 
 	.title {
@@ -61,7 +61,7 @@
 		display: grid;
 		align-content: start;
 		width: 360px;
-		margin: 50px 0;
+		margin: 50px 0 60px;
 	}
 
 	.buttons {
@@ -69,7 +69,7 @@
 		grid-auto-flow: column;
 		gap: 32px;
 		font-family: Cinzel;
-		font-size: 22px;
+		font-size: 23px;
 		font-weight: bold;
 		color: var(--gold);
 	}
