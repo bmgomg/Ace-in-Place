@@ -64,11 +64,8 @@
 		ss.strikes = 0;
 		ss.flip = true;
 
-		ss.delay = true;
-
-		post(() => {
-			post(() => delete ss.delay, 1000);
-		}, 500);
+		ss.playAgain = true;
+		post(() => delete ss.playAgain, 1000);
 	};
 
 	const style = `font-size: ${28}px;`;
