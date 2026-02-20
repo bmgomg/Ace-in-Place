@@ -38,7 +38,6 @@
 			}
 
 			if (index === ss.swap1 && ss.swap2 + 1) {
-				post(() => {
 					_sound.play('cluck');
 
 					const ch1 = ss.cells[ss.swap1].code;
@@ -65,7 +64,6 @@
 					}
 
 					stopTimer();
-				});
 			}
 		};
 
