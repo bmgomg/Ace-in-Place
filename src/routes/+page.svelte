@@ -69,7 +69,7 @@
 		place-content: center;
 		box-sizing: border-box;
 		/* border: 1px dotted orange; */
-		/* background: radial-gradient(transparent, black 300%); */
+		background: radial-gradient(transparent, black 400%);
 		background-position: center;
 		filter: drop-shadow(0 0 3px black);
 		overflow: hidden;
