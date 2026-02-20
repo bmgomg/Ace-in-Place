@@ -119,7 +119,7 @@
 		font-size: 36px;
 		cursor: pointer;
 		background: var(--ow);
-		transition: translate 0.5s linear;
+		transition: translate 0.5s;
 	}
 
 	.bg {
