@@ -14,6 +14,6 @@ export const CELL_RATIO = 0.72;
 export const CELL_HEIGHT = CELL_WIDTH / CELL_RATIO;
 export const CELL_MARGIN = 3;
 export const TICK_MS = 500;
-export const LEVEL_SECS = [3, 50, 40, 30, 20];
+export const LEVEL_SECS = [60, 50, 40, 30, 20];
 export const TASKS_PER_LEVEL = 5;
 export const MAX_STRIKES = 3;
