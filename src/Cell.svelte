@@ -38,32 +38,34 @@
 			}
 
 			if (index === ss.swap1 && ss.swap2 + 1) {
-				_sound.play('cluck');
+				post(() => {
+					_sound.play('cluck');
 
-				const ch1 = ss.cells[ss.swap1].code;
-				const ch2 = ss.cells[ss.swap2].code;
-				ss.cells[ss.swap1].code = ch2;
-				ss.cells[ss.swap2].code = ch1;
+					const ch1 = ss.cells[ss.swap1].code;
+					const ch2 = ss.cells[ss.swap2].code;
+					ss.cells[ss.swap1].code = ch2;
+					ss.cells[ss.swap2].code = ch1;
 
-				delete ss.swap1;
-				delete ss.swap2;
+					delete ss.swap1;
+					delete ss.swap2;
 
-				if (isSolved()) {
-					post(() => _sound.play('won', { rate: 2 }), 150);
+					if (isSolved()) {
+						post(() => _sound.play('won', { rate: 2 }), 150);
 
-					if (ss.timer) {
-						onTaskCompleted();
-						ss.points += calcPoints();
+						if (ss.timer) {
+							onTaskCompleted();
+							ss.points += calcPoints();
 
-						persist();
+							persist();
+						}
+
+						post(() => (ss.flip = true), 1000);
+					} else if (ss.timer) {
+						onFail();
 					}
 
-					post(() => (ss.flip = true), 1000);
-				} else if (ss.timer) {
-					onFail();
-				}
-
-				stopTimer();
+					stopTimer();
+				}, 100);
 			}
 		};
 
@@ -150,7 +152,7 @@
 			transform: scale(1);
 		}
 		to {
-			transform: scale(0.90);
+			transform: scale(0.9);
 		}
 	}
 </style>
