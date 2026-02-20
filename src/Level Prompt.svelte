@@ -1,7 +1,7 @@
 <script>
 	import { sample } from 'lodash-es';
 	import { fade } from 'svelte/transition';
-	import { CELL_HEIGHT, CELL_MARGIN, LEVEL_SECS } from './const';
+	import { CELL_HEIGHT, CELL_MARGIN, LEVEL_SECS, SZY } from './const';
 	import { onStart } from './shared.svelte';
 	import { _prompt, ss } from './state.svelte';
 	import TextButton from './Text Button.svelte';
@@ -57,7 +57,7 @@
 </script>
 
 {#if !ss.practice && ss.levelPrompt}
-	<div class="level-prompt" style="height: {(CELL_HEIGHT + CELL_MARGIN * 2) * ss.szy + 46}px;" in:fade>
+	<div class="level-prompt" style="height: {(CELL_HEIGHT + CELL_MARGIN * 2) * SZY + 46}px;" in:fade>
 		{#if ss.ticks}
 			<span class="progress" tabindex="-1">game in progress</span>
 		{:else}

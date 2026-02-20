@@ -1,7 +1,7 @@
 <script>
 	import { fade } from 'svelte/transition';
 	import Cell from './Cell.svelte';
-	import { CELL_HEIGHT, CELL_MARGIN } from './const';
+	import { CELL_COUNT, CELL_HEIGHT, CELL_MARGIN, SZY } from './const';
 	import { makePuzzle } from './shared.svelte';
 	import { ss } from './state.svelte';
 	import { _range } from './utils';
@@ -28,12 +28,12 @@
 
 {#if ss.cells && (ss.practice || !ss.levelPrompt)}
 	<div bind:this={_this} class="board {ss.flip ? 'flipped' : ''}" in:fade>
-		{#each _range(1, ss.cellCount) as index (index)}
+		{#each _range(1, CELL_COUNT) as index (index)}
 			<Cell cell={ss.cells[index - 1]} />
 		{/each}
 	</div>
 {:else}
-	<div style="grid-area: 3/1; height: {(CELL_HEIGHT + CELL_MARGIN * 2) * ss.szy}px;"></div>
+	<div style="grid-area: 3/1; height: {(CELL_HEIGHT + CELL_MARGIN * 2) * SZY}px;"></div>
 {/if}
 
 <style>

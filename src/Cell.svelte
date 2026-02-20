@@ -1,6 +1,6 @@
 <script>
 	import { CARDS } from './Cards';
-	import { CELL_MARGIN, CELL_WIDTH, MAX_STRIKES } from './const';
+	import { CELL_MARGIN, CELL_WIDTH, MAX_STRIKES, SZX } from './const';
 	import { calcPoints, inGoodPlace, isSolved, onFail, onTaskCompleted, persist, stopTimer } from './shared.svelte';
 	import { _sound } from './sound.svelte';
 	import { _prompt, ss } from './state.svelte';
@@ -9,8 +9,8 @@
 	const { cell } = $props();
 	const { index, code } = $derived(cell);
 	let _this = $state(null);
-	const row = $derived(Math.floor(index / ss.szx) + 1);
-	const col = $derived((index % ss.szx) + 1);
+	const row = $derived(Math.floor(index / SZX) + 1);
+	const col = $derived((index % SZX) + 1);
 
 	const img = $derived(CARDS[+code]);
 

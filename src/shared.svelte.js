@@ -1,7 +1,7 @@
 import { keys, sampleSize } from 'lodash-es';
 import { SvelteSet } from 'svelte/reactivity';
 import { CARDS } from './Cards';
-import { APP_STATE, LEVEL_SECS, MAX_STRIKES, MODE_PRACITCE, PROMPT_PLAY_AGAIN, TASKS_PER_LEVEL, TICK_MS } from './const';
+import { APP_STATE, CELL_COUNT, LEVEL_SECS, MAX_STRIKES, MODE_PRACITCE, PROMPT_PLAY_AGAIN, SZX, SZY, TASKS_PER_LEVEL, TICK_MS } from './const';
 import { _sound } from './sound.svelte';
 import { _prompt, _stats, ss } from './state.svelte';
 import { _range, post, shuffleInPlace } from './utils';
@@ -88,17 +88,17 @@ export const isSolved = (codes) => {
     }
 
     // check all horizontal and vertical adjacencies
-    for (let i = 0; i < ss.cellCount; i++) {
-        const r = Math.floor(i / ss.szx);
-        const c = i % ss.szx;
+    for (let i = 0; i < CELL_COUNT; i++) {
+        const r = Math.floor(i / SZX);
+        const c = i % SZX;
 
         // check right neighbor
-        if (c < ss.szx - 1 && !isGoodNeighbor(codes[i], codes[i + 1])) {
+        if (c < SZX - 1 && !isGoodNeighbor(codes[i], codes[i + 1])) {
             return false;
         }
 
         // check down neighbor
-        if (r < ss.szy - 1 && !isGoodNeighbor(codes[i], codes[(r + 1) * ss.szx + c])) {
+        if (r < SZY - 1 && !isGoodNeighbor(codes[i], codes[(r + 1) * SZX + c])) {
             return false;
         }
     }
@@ -111,14 +111,14 @@ export const inGoodPlace = (idx, codes) => {
         codes = ss.cells.map(c => c.code);
     }
 
-    const positions = _range(0, ss.cellCount - 1);
-    const row = Math.floor(positions[idx] / ss.szx);
-    const col = positions[idx] % ss.szx;
+    const positions = _range(0, CELL_COUNT - 1);
+    const row = Math.floor(positions[idx] / SZX);
+    const col = positions[idx] % SZX;
 
-    const up = row > 0 ? codes[(row - 1) * ss.szx + col] : null;
-    const down = row < ss.szy - 1 ? codes[(row + 1) * ss.szx + col] : null;
-    const left = col > 0 ? codes[row * ss.szx + (col - 1)] : null;
-    const right = col < ss.szx - 1 ? codes[row * ss.szx + (col + 1)] : null;
+    const up = row > 0 ? codes[(row - 1) * SZX + col] : null;
+    const down = row < SZY - 1 ? codes[(row + 1) * SZX + col] : null;
+    const left = col > 0 ? codes[row * SZX + (col - 1)] : null;
+    const right = col < SZX - 1 ? codes[row * SZX + (col + 1)] : null;
 
     const code = codes[idx];
 
@@ -132,12 +132,12 @@ export const inGoodPlace = (idx, codes) => {
 const makeMatrix = () => {
     const codes = keys(CARDS).map(code => +code);
 
-    const mx = Array(ss.cellCount).fill(null);
+    const mx = Array(CELL_COUNT).fill(null);
     const used = new SvelteSet();
-    const positions = _range(0, ss.cellCount - 1);
+    const positions = _range(0, CELL_COUNT - 1);
 
     const backtrack = (idx) => {
-        if (idx === ss.cellCount) {
+        if (idx === CELL_COUNT) {
             return true;
         }
 
@@ -149,13 +149,13 @@ const makeMatrix = () => {
                 continue;
             }
 
-            const row = Math.floor(positions[idx] / ss.szx);
-            const col = positions[idx] % ss.szx;
+            const row = Math.floor(positions[idx] / SZX);
+            const col = positions[idx] % SZX;
 
-            const up = row > 0 ? mx[(row - 1) * ss.szx + col] : null;
-            const down = row < ss.szy - 1 ? mx[(row + 1) * ss.szx + col] : null;
-            const left = col > 0 ? mx[row * ss.szx + (col - 1)] : null;
-            const right = col < ss.szx - 1 ? mx[row * ss.szx + (col + 1)] : null;
+            const up = row > 0 ? mx[(row - 1) * SZX + col] : null;
+            const down = row < SZY - 1 ? mx[(row + 1) * SZX + col] : null;
+            const left = col > 0 ? mx[row * SZX + (col - 1)] : null;
+            const right = col < SZX - 1 ? mx[row * SZX + (col + 1)] : null;
 
             if (isGoodNeighbor(code, up) && isGoodNeighbor(code, down) && isGoodNeighbor(code, left) && isGoodNeighbor(code, right)) {
                 mx[positions[idx]] = code;
@@ -188,7 +188,7 @@ const doMakePuzzle = () => {
 
     do {
         codes = [...mx];
-        const ids = sampleSize(_range(0, ss.cellCount - 1), 2);
+        const ids = sampleSize(_range(0, CELL_COUNT - 1), 2);
         const code = codes[ids[0]];
         codes[ids[0]] = codes[ids[1]];
         codes[ids[1]] = code;
@@ -317,16 +317,6 @@ export const onMode = (mode) => {
 
     ss.mode = mode;
     ss.practice = mode === MODE_PRACITCE;
-
-    if (ss.practice) {
-        ss.szx = 4;
-        ss.szy = 3;
-    } else {
-        ss.szx = 5;
-        ss.szy = 4;
-    }
-
-    ss.cellCount = ss.szx * ss.szy;
 
     _sound.play('plop');
 
