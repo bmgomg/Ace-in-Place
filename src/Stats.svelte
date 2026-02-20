@@ -1,7 +1,6 @@
 <script>
 	import NumberFlow from '@number-flow/svelte';
 	import { _stats, ss } from './state.svelte';
-	import { MODE_CHALLENGE } from './const';
 
 	const ave = $derived(_stats.plays ? Math.round(_stats.total / _stats.plays) : 0);
 </script>
