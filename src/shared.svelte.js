@@ -15,7 +15,7 @@ export const persist = () => {
     localStorage.setItem(APP_STATE, json);
 
     if (!ss.practice) {
-        json = JSON.stringify({ ..._stats, level: ss.level, cells: ss.cells, ticks: ss.ticks, tasks: ss.tasks, points: ss.points, strikes: ss.strikes, over: ss.over, levelComplete: ss.levelComplete });
+        json = JSON.stringify({ ..._stats, level: ss.level, cells: ss.cells, ticks: ss.ticks, tasks: ss.tasks, points: ss.points, strikes: ss.strikes, over: ss.over, levelComplete: ss.levelComplete, fail: ss.fail });
         localStorage.setItem(appKey(), json);
     }
 };
@@ -41,11 +41,12 @@ const loadGame = () => {
         const levelComplete = job.levelComplete;
 
         ss.level = over ? 1 : job.level;
-        ss.ticks = over || levelComplete ? 0 : -job.ticks;
+        ss.fail = job.fail && (!over && !levelComplete);
+        ss.ticks = over || levelComplete || ss.fail ? 0 : -job.ticks;
         ss.tasks = over ? 0 : job.tasks;
         ss.points = over ? 0 : job.points;
         ss.strikes = over || levelComplete ? 0 : job.strikes;
-        ss.cells = over || levelComplete ? null : job.cells;
+        ss.cells = over || levelComplete || !ss.ticks|| ss.fail ? null : job.cells;
     } else {
         _stats.plays = 0;
         _stats.total = 0;

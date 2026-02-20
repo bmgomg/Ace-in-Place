@@ -53,6 +53,7 @@
 		onStart(ss.ticks ? 'plop' : 'dice');
 		delete ss.levelPrompt;
 	};
+	
 </script>
 
 {#if !ss.practice && ss.levelPrompt}
@@ -66,7 +67,7 @@
 			</div>
 		{/if}
 		<div class="button {_prompt.opacity ? 'hidden' : ''}">
-			<TextButton id="level-prompt" text={[ss.ticks ? 'resume' : ss.level > 1 ? 'continue' : 'start']} {onClick} />
+			<TextButton id="level-prompt" text={[ss.ticks || ss.tasks || ss.points || ss.strikes ? 'resume' : ss.level > 1 ? 'continue' : 'start']} {onClick} />
 		</div>
 	</div>
 {/if}

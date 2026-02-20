@@ -55,15 +55,21 @@
 		}
 	};
 
-const onPlayAgain = () => {
-	_sound.play('plop');
+	const onPlayAgain = () => {
+		_sound.play('plop');
 
-	ss.level = 1;
-    ss.tasks = 0;
-    ss.points = 0;
-    ss.strikes = 0;
-	ss.flip = true;
-};
+		ss.level = 1;
+		ss.tasks = 0;
+		ss.points = 0;
+		ss.strikes = 0;
+		ss.flip = true;
+
+		ss.delay = true;
+
+		post(() => {
+			post(() => delete ss.delay, 1000);
+		}, 500);
+	};
 
 	const style = `font-size: ${28}px;`;
 </script>
