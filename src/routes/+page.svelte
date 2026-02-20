@@ -85,7 +85,7 @@
 		box-sizing: border-box;
 		width: 470px;
 		height: 800px;
-		border: 3px solid var(--ow);
+		border: 3px solid var(--gold);
 		border-radius: 25px;
 	}
 

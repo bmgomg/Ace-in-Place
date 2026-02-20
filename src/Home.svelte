@@ -10,7 +10,7 @@
 	const CONTENT = `
         <span>Solve each puzzle by swapping ${hi}exactly two</span> cards. You get ${hi}only one swap</span> per task.</span>
 		<br/>
-        <span>The puzzle is solved when any ${hi}two adjacent</span> cards are at least ${hi}two ranks</span> apart.</span>
+        <span>The puzzle is solved when ${hi}any two</span> horizontally or vertically ${hi}adjacent</span> cards are at least ${hi}two ranks</span> apart.</span>
 		`;
 </script>
 
@@ -47,7 +47,8 @@
 	}
 
 	.grad-text {
-		background: -webkit-linear-gradient(-90deg, var(--ow) 0%, var(--ow) 30%, var(--gold) 85%, var(--gold) 100%);
+		/* background: -webkit-linear-gradient(-90deg, var(--ow) 0%, var(--ow) 30%, var(--gold) 60%, var(--gold) 100%); */
+		background: -webkit-linear-gradient(-90deg, #ede2c5, #b6a678 50%);
 		background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
