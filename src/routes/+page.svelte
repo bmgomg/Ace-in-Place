@@ -4,7 +4,6 @@
 	import Splash from '../Splash.svelte';
 	import { ss } from '../state.svelte';
 	import { clientRect, post } from '../utils';
-	import Frame from '$lib/images/Frame.webp';
 
 	let scale = $state(1);
 
@@ -52,7 +51,6 @@
 		<Splash />
 	{:else}
 		<div class="content" style="scale: {scale};">
-			<img class="frame" src={Frame} alt="" />
 			<GamePage />
 			<Home />
 			{#if ss.home}
@@ -87,14 +85,8 @@
 		height: 800px;
 		border: 3px solid var(--gold);
 		border-radius: 25px;
+		background: radial-gradient(transparent, black 400%);
 	}
-
-    .frame {
-		display: none;
-        grid-area: 1/1;
-        touch-action: none;
-		opacity: 0.7;
-    }
 
 	.disclaimer {
 		grid-area: 1/1;

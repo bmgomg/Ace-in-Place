@@ -10,7 +10,7 @@
 	const CONTENT = `
         <span>Solve each puzzle by swapping ${hi}exactly two</span> cards. You get ${hi}only one swap</span> per task.</span>
 		<br/>
-        <span>The puzzle is solved when ${hi}any two</span> horizontally or vertically ${hi}adjacent</span> cards are at least ${hi}two ranks</span> apart.</span>
+        <span>The puzzle is solved when ${hi}every pair</span> of horizontally or vertically ${hi}adjacent</span> cards differ by at least ${hi}two ranks</span>.</span>
 		`;
 </script>
 
