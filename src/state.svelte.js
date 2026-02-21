@@ -2,7 +2,6 @@ import { PROMPT_TRANSITION } from './const';
 import { post } from './utils';
 
 export const ss = $state({
-    lang: 'EN',
     home: true,
     level: 1,
     tasks: 0,

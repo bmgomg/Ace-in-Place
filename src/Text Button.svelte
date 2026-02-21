@@ -79,6 +79,6 @@
 	}
 
 	.selected {
-		text-decoration: underline;
+		text-decoration: overline;
 	}
 </style>

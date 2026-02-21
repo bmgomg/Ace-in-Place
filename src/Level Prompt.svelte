@@ -57,7 +57,7 @@
 </script>
 
 {#if !ss.practice && ss.levelPrompt}
-	<div class="level-prompt" style="height: {(CELL_HEIGHT + CELL_MARGIN * 2) * ss.szy + 46}px;" in:fade>
+	<div class="level-prompt" style="height: {(CELL_HEIGHT + CELL_MARGIN * 2) * ss.rows + 46}px;" in:fade>
 		{#if ss.ticks}
 			<span class="progress" tabindex="-1">game in progress</span>
 		{:else}

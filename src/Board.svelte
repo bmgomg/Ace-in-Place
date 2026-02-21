@@ -1,8 +1,8 @@
 <script>
 	import { fade } from 'svelte/transition';
 	import Cell from './Cell.svelte';
-	import { CELL_HEIGHT, CELL_MARGIN } from './const';
-	import { makePuzzle } from './shared.svelte';
+	import { CELL_HEIGHT, CELL_MARGIN, MODE_PRACITCE } from './const';
+	import { makePuzzle, onMode } from './shared.svelte';
 	import { ss } from './state.svelte';
 	import { _range } from './utils';
 
@@ -15,9 +15,15 @@
 			}
 
 			if (ss.flip) {
+				const flip = ss.flip;
 				delete ss.flip;
 				ss.ticks = 0;
-				makePuzzle();
+
+				if (flip === 1) {
+					onMode(MODE_PRACITCE);
+				} else {
+					makePuzzle();
+				}
 			}
 		};
 
@@ -33,7 +39,7 @@
 		{/each}
 	</div>
 {:else}
-	<div style="grid-area: 3/1; height: {(CELL_HEIGHT + CELL_MARGIN * 2) * ss.szy}px;"></div>
+	<div style="grid-area: 3/1; height: {(CELL_HEIGHT + CELL_MARGIN * 2) * ss.rows}px;"></div>
 {/if}
 
 <style>

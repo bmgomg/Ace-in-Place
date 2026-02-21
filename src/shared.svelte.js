@@ -8,29 +8,43 @@ import { _range, post, shuffleInPlace } from './utils';
 
 export const _log = (value) => console.log($state.snapshot(value));
 
-export const appKey = () => `${APP_STATE} • ${ss.lang}`;
+export const appKey = () => `${APP_STATE} • ${ss.mode}`;
 
 export const persist = () => {
     let json = JSON.stringify({ sfx: _sound.sfx, music: _sound.music });
     localStorage.setItem(APP_STATE, json);
 
-    if (!ss.practice) {
+    if (ss.practice) {
+        json = JSON.stringify({ largePractice: ss.largePractice });
+    } else {
         json = JSON.stringify({ ..._stats, level: ss.level, cells: ss.cells, ticks: ss.ticks, tasks: ss.tasks, points: ss.points, strikes: ss.strikes, over: ss.over, levelComplete: ss.levelComplete, fail: ss.fail });
-        localStorage.setItem(appKey(), json);
     }
+
+    localStorage.setItem(appKey(), json);
 };
 
-const loadGame = () => {
-    let json = localStorage.getItem(APP_STATE);
-    let job = JSON.parse(json);
+const loadCommon = () => {
+    const json = localStorage.getItem(APP_STATE);
+    const job = JSON.parse(json);
 
     if (job) {
         _sound.sfx = job.sfx;
         _sound.music = job.music;
     }
+};
 
-    json = localStorage.getItem(appKey());
-    job = JSON.parse(json);
+const loadPracticeOps = () => {
+    const json = localStorage.getItem(appKey());
+    const job = JSON.parse(json);
+
+    if (job) {
+        ss.largePractice = job.largePractice;
+    }
+};
+
+const loadGame = () => {
+    const json = localStorage.getItem(appKey());
+    const job = JSON.parse(json);
 
     if (job) {
         _stats.plays = job.plays;
@@ -89,16 +103,16 @@ export const isSolved = (codes) => {
 
     // check all horizontal and vertical adjacencies
     for (let i = 0; i < ss.cellCount; i++) {
-        const r = Math.floor(i / ss.szx);
-        const c = i % ss.szx;
+        const r = Math.floor(i / ss.cols);
+        const c = i % ss.cols;
 
         // check right neighbor
-        if (c < ss.szx - 1 && !isGoodNeighbor(codes[i], codes[i + 1])) {
+        if (c < ss.cols - 1 && !isGoodNeighbor(codes[i], codes[i + 1])) {
             return false;
         }
 
         // check down neighbor
-        if (r < ss.szy - 1 && !isGoodNeighbor(codes[i], codes[(r + 1) * ss.szx + c])) {
+        if (r < ss.rows - 1 && !isGoodNeighbor(codes[i], codes[(r + 1) * ss.cols + c])) {
             return false;
         }
     }
@@ -112,13 +126,13 @@ export const inGoodPlace = (idx, codes) => {
     }
 
     const positions = _range(0, ss.cellCount - 1);
-    const row = Math.floor(positions[idx] / ss.szx);
-    const col = positions[idx] % ss.szx;
+    const row = Math.floor(positions[idx] / ss.cols);
+    const col = positions[idx] % ss.cols;
 
-    const up = row > 0 ? codes[(row - 1) * ss.szx + col] : null;
-    const down = row < ss.szy - 1 ? codes[(row + 1) * ss.szx + col] : null;
-    const left = col > 0 ? codes[row * ss.szx + (col - 1)] : null;
-    const right = col < ss.szx - 1 ? codes[row * ss.szx + (col + 1)] : null;
+    const up = row > 0 ? codes[(row - 1) * ss.cols + col] : null;
+    const down = row < ss.rows - 1 ? codes[(row + 1) * ss.cols + col] : null;
+    const left = col > 0 ? codes[row * ss.cols + (col - 1)] : null;
+    const right = col < ss.cols - 1 ? codes[row * ss.cols + (col + 1)] : null;
 
     const code = codes[idx];
 
@@ -149,13 +163,13 @@ const makeMatrix = () => {
                 continue;
             }
 
-            const row = Math.floor(positions[idx] / ss.szx);
-            const col = positions[idx] % ss.szx;
+            const row = Math.floor(positions[idx] / ss.cols);
+            const col = positions[idx] % ss.cols;
 
-            const up = row > 0 ? mx[(row - 1) * ss.szx + col] : null;
-            const down = row < ss.szy - 1 ? mx[(row + 1) * ss.szx + col] : null;
-            const left = col > 0 ? mx[row * ss.szx + (col - 1)] : null;
-            const right = col < ss.szx - 1 ? mx[row * ss.szx + (col + 1)] : null;
+            const up = row > 0 ? mx[(row - 1) * ss.cols + col] : null;
+            const down = row < ss.rows - 1 ? mx[(row + 1) * ss.cols + col] : null;
+            const left = col > 0 ? mx[row * ss.cols + (col - 1)] : null;
+            const right = col < ss.cols - 1 ? mx[row * ss.cols + (col + 1)] : null;
 
             if (isGoodNeighbor(code, up) && isGoodNeighbor(code, down) && isGoodNeighbor(code, left) && isGoodNeighbor(code, right)) {
                 mx[positions[idx]] = code;
@@ -319,16 +333,20 @@ export const onMode = (mode) => {
     ss.practice = mode === MODE_PRACITCE;
 
     if (ss.practice) {
-        ss.szx = 4;
-        ss.szy = 3;
+        loadPracticeOps();
+
+        ss.cols = ss.largePractice ? 5 : 4;
+        ss.rows = ss.largePractice ? 4 : 3;
     } else {
-        ss.szx = 5;
-        ss.szy = 4;
+        ss.cols = 5;
+        ss.rows = 4;
     }
 
-    ss.cellCount = ss.szx * ss.szy;
+    ss.cellCount = ss.cols * ss.rows;
 
     _sound.play('plop');
+
+    loadCommon();
 
     if (ss.practice) {
         makePuzzle();

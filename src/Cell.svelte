@@ -9,8 +9,8 @@
 	const { cell } = $props();
 	const { index, code } = $derived(cell);
 	let _this = $state(null);
-	const row = $derived(Math.floor(index / ss.szx) + 1);
-	const col = $derived((index % ss.szx) + 1);
+	const row = $derived(Math.floor(index / ss.cols) + 1);
+	const col = $derived((index % ss.cols) + 1);
 
 	const img = $derived(CARDS[+code]);
 

@@ -2,6 +2,7 @@
 	import Board from './Board.svelte';
 	import GameOver from './Game Over.svelte';
 	import LevelPrompt from './Level Prompt.svelte';
+	import PracticeOps from './Practice Ops.svelte';
 	import Prompt from './Prompt.svelte';
 	import Scoreboard from './Scoreboard.svelte';
 	import { elapsedSecs, secsRemained } from './shared.svelte';
@@ -18,6 +19,7 @@
 	<Stats />
 	<Scoreboard />
 	<LevelPrompt/>
+	<PracticeOps/>
 	<Board />
 	<GameOver />
 	<StatusPanel />

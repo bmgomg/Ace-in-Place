@@ -7,7 +7,7 @@
 	const count = $derived(ss.cells?.filter((c) => !inGoodPlace(c.index)).length || 0);
 </script>
 
-{#if ss.practice || (!ss.levelPrompt && !_prompt.id && !ss.playAgain)}
+{#if ss.flip !== 1 && (ss.practice || (!ss.levelPrompt && !_prompt.id && !ss.playAgain))}
 	<div class="status-panel quiet" in:fade>
 		{#if count}
 			<div in:fade><NumberFlow value={count} suffix=" cards mismatched" /></div>
