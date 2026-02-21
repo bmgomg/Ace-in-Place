@@ -10,8 +10,8 @@
 	const CONTENT = `
         <span>Solve each puzzle by swapping ${hi}exactly two</span> cards. You get ${hi}only one swap</span> per task.</span>
 		<br/>
-        <span>The puzzle is solved when ${hi}every pair</span> of horizontally or vertically ${hi}adjacent</span> cards differ by at least ${hi}two ranks</span>.</span>
-		`;
+        <span>The puzzle is solved when ${hi}no</span> horizon-tally or vertically ${hi}adjacent</span> cards ${hi}differ</span> in rank by only ${hi}0 or 1</span>, such as 3-4, 8-8, 10–Jack, or King-Ace.</span>
+		 `;
 </script>
 
 {#if ss.home}
@@ -60,7 +60,7 @@
 	.content {
 		display: grid;
 		align-content: start;
-		width: 360px;
+		width: 365px;
 		margin: 50px 0 60px;
 	}
 
