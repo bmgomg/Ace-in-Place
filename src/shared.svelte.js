@@ -70,6 +70,8 @@ const loadGame = () => {
         ss.tasks = 0;
         ss.points = 0;
         ss.strikes = 0;
+
+        delete ss.cells;
     }
 };
 
