@@ -10,7 +10,7 @@
 	const CONTENT = `
         <span>Solve each puzzle by swapping ${hi}exactly two</span> cards. You get ${hi}only one swap</span> per task.</span>
 		<br/>
-        <span>The puzzle is solved when ${hi}no</span> horizon-tally or vertically ${hi}adjacent</span> cards ${hi}differ</span> in rank by only ${hi}0 or 1</span>, such as 3-4, 8-8, 10–Jack, or King-Ace.</span>
+        <span>The puzzle is solved when all horizon-tally or vertically ${hi}adjacent</span> cards are at least ${hi}two ranks apart</span>. For example, these pairs are invalid: 3–4, 8–8, 10–Jack, or King–Ace.</span>
 		 `;
 </script>
 
