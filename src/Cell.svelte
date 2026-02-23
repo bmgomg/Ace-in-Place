@@ -67,7 +67,7 @@
 					stopTimer();
 				};
 
-				post(doSwap, 100);
+				post(doSwap, 1000);
 			}
 		};
 
