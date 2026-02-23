@@ -1,18 +1,23 @@
 <script>
 	import { CARDS } from './Cards';
-	import { CELL_MARGIN, CELL_WIDTH, MAX_STRIKES } from './const';
+	import { CELL_HEIGHT, CELL_MARGIN, CELL_WIDTH, MAX_STRIKES } from './const';
 	import { calcPoints, inGoodPlace, isSolved, onFail, onTaskCompleted, persist, stopTimer } from './shared.svelte';
 	import { _sound } from './sound.svelte';
 	import { _prompt, ss } from './state.svelte';
-	import { post, rectCenter } from './utils';
+	import { post } from './utils';
 
 	const { cell } = $props();
 	const { index, code } = $derived(cell);
 	let _this = $state(null);
-	const row = $derived(Math.floor(index / ss.cols) + 1);
-	const col = $derived((index % ss.cols) + 1);
+	const { row, col } = $derived(rowCol(index));
 
 	const img = $derived(CARDS[+code]);
+
+	const rowCol = (idx) => {
+		const row = Math.floor(idx / ss.cols) + 1;
+		const col = (idx % ss.cols) + 1;
+		return { row, col };
+	};
 
 	const onPointerDown = () => {
 		_prompt.opacity = 0;
@@ -67,7 +72,7 @@
 					stopTimer();
 				};
 
-				post(doSwap, 1000);
+				doSwap();
 			}
 		};
 
@@ -88,14 +93,17 @@
 			return [0, 0];
 		}
 
-		const r1 = rectCenter('#cell-' + ss.swap1);
-		const r2 = rectCenter('#cell-' + ss.swap2);
+		const { row: r1, col: c1 } = rowCol(ss.swap1);
+		const { row: r2, col: c2 } = rowCol(ss.swap2);
+
+		const dx = (c2 - c1) * (CELL_WIDTH + 2 * CELL_MARGIN);
+		const dy = (r2 - r1) * (CELL_HEIGHT + 2 * CELL_MARGIN);
 
 		if (index === ss.swap1) {
-			return [r2.x - r1.x, r2.y - r1.y];
+			return [dx, dy];
 		}
 
-		return [r1.x - r2.x, r1.y - r2.y];
+		return [-dx, -dy];
 	});
 
 	const disabled = $derived((ss.swap1 + 1 && ss.swap2 + 1) || (!ss.practice && ss.strikes === MAX_STRIKES) || isSolved());
