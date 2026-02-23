@@ -3,6 +3,7 @@
 	import GameOver from './Game Over.svelte';
 	import LevelPrompt from './Level Prompt.svelte';
 	import PracticeOps from './Practice Ops.svelte';
+	import Prompt from './Prompt.svelte';
 	import Ranks from './Ranks.svelte';
 	import Scoreboard from './Scoreboard.svelte';
 	import { secsRemained } from './shared.svelte';
@@ -24,7 +25,7 @@
 	<GameOver />
 	<StatusPanel />
 	<Timer secs={secsRemained()} />
-	<Ranks
+	<Ranks/>
 	<Prompt/>
 	<Toolbar />
 </div>
