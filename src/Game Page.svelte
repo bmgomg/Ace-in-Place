@@ -4,6 +4,7 @@
 	import LevelPrompt from './Level Prompt.svelte';
 	import PracticeOps from './Practice Ops.svelte';
 	import Prompt from './Prompt.svelte';
+	import Ranks from './Ranks.svelte';
 	import Scoreboard from './Scoreboard.svelte';
 	import { elapsedSecs, secsRemained } from './shared.svelte';
 	import { ss } from './state.svelte';
@@ -23,7 +24,8 @@
 	<Board />
 	<GameOver />
 	<StatusPanel />
-	<Timer secs={!ss.practice ? secsRemained() : elapsedSecs()} />
+	<Timer secs={secsRemained()} />
+	<Ranks
 	<Prompt/>
 	<Toolbar />
 </div>
