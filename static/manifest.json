@@ -1,7 +1,7 @@
 {
-  "short_name": "Ace in Place",
-  "name": "Ace in Place",
-  "description": "Solve the puzzle as quickly as possible by swapping two letters at a time.",
+  "short_name": "Race the Ace",
+  "name": "Race the Ace",
+  "description": "Solve the puzzle as quickly as possible by swapping two cards at a time.",
   "dir": "ltr",
   "lang": "en",
   "orientation": "portrait",

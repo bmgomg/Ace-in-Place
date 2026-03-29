@@ -4,6 +4,7 @@
 	import { onMode } from './shared.svelte';
 	import { ss } from './state.svelte';
 	import TextButton from './Text Button.svelte';
+	import Logo from '$lib/images/Logo.webp';
 
 	const hi = '<span style="color: var(--gold);">';
 
@@ -16,7 +17,8 @@
 
 {#if ss.home}
 	<div class="home" in:fade={{ duration: 200 }}>
-		<div class="title grad-text">Ace in Place</div>
+		<img class="logo" src={Logo} alt="" width="35%" />
+		<div class="title grad-text">Race the Ace</div>
 		<div class="content" tabindex="-1">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html CONTENT}
@@ -38,6 +40,10 @@
 		justify-items: center;
 		user-select: none;
 		font-size: 21px;
+	}
+
+	.logo {
+		margin-bottom: 50px;
 	}
 
 	.title {
