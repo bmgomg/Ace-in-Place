@@ -1,6 +1,7 @@
 <script>
 	import GamePage from '../Game Page.svelte';
 	import Home from '../Home.svelte';
+	import { _sound } from '../sound.svelte';
 	import Splash from '../Splash.svelte';
 	import { ss } from '../state.svelte';
 	import { clientRect, post } from '../utils';
@@ -31,11 +32,31 @@
 
 		onResize();
 
+		const onBlur = () => {
+			if (_sound.music === 'on') {
+				_sound.music = 'paused';
+				_sound.stopMusic();
+			}
+		};
+
+		const onFocus = () => {
+			if (_sound.music === 'paused') {
+				_sound.music = 'on';
+				_sound.playMusic();
+			}
+		};
+
+		onResize();
+
+		window.addEventListener('blur', onBlur);
+		window.addEventListener('focus', onFocus);
 		window.addEventListener('contextmenu', disable);
 		window.addEventListener('dblclick', disable);
 		window.addEventListener('resize', onResize);
 
 		return () => {
+			window.removeEventListener('blur', onBlur);
+			window.removeEventListener('focus', onFocus);
 			window.removeEventListener('contextmenu', disable);
 			window.removeEventListener('dblclick', disable);
 			window.removeEventListener('resize', onResize);

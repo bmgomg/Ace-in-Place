@@ -42,9 +42,9 @@
 	};
 
 	const onMusic = () => {
-		_sound.music = !_sound.music;
+		_sound.music = _sound.music === 'off' ? 'on' : 'off';
 
-		if (_sound.music) {
+		if (_sound.music === 'on') {
 			_sound.playMusic();
 		} else {
 			_sound.stopMusic();
@@ -61,7 +61,7 @@
 		<ToolButton id="tb-stats" src={Stats} onClick={onResetStats} disabled={_stats.plays === 0 || ss.timer} />
 	{/if}
 	<ToolButton id="tb-sfx" src={_sound.sfx ? SoundOn : SoundOff} onClick={onSound} />
-	<ToolButton id="tb-music" src={_sound.music ? MusicOn : MusicOff} onClick={onMusic} />
+	<ToolButton id="tb-music" src={_sound.music === 'off' ? MusicOff : MusicOn} onClick={onMusic} />
 </div>
 
 <style>
